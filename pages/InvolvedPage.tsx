@@ -1,64 +1,152 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
 export const InvolvedPage: React.FC = () => {
+  const [selectedAmount, setSelectedAmount] = useState<string | null>(null);
+  const [customAmount, setCustomAmount] = useState('');
+
+  const handleAmountSelect = (amt: string) => {
+    setSelectedAmount(amt);
+    setCustomAmount('');
+  };
+
+  const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomAmount(e.target.value);
+    if (e.target.value) {
+      setSelectedAmount(null);
+    }
+  };
+
+  const handleDonate = () => {
+    const finalAmount = selectedAmount || customAmount;
+    if (finalAmount) {
+      // Integration logic would go here
+      alert(`Proceeding to payment for ${finalAmount.startsWith('R') ? finalAmount : 'R' + finalAmount}`);
+    }
+  };
+
   return (
     <div className="bg-[#fcfbf7] min-h-screen page-transition overflow-x-hidden">
-      <header className="pt-28 md:pt-32 pb-12 px-6 max-w-7xl mx-auto text-center">
-        <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-black text-[#4A2C2A] tracking-tighter leading-none mb-4 md:mb-6">
-          BAMBA <span className="text-[#D4AF37]">IQHAZA.</span>
-        </h1>
-        <div className="h-px w-16 md:w-24 bg-[#D4AF37] mx-auto mb-4 md:mb-6"></div>
-        <p className="text-gray-400 text-[10px] uppercase tracking-[0.6em] font-black">Guardian of the Nation</p>
-      </header>
+      
+      {/* Hero */}
+      <section className="pt-32 pb-12 px-4 md:px-6 max-w-7xl mx-auto text-center">
+        <div className="reveal">
+          <span className="text-[#D4AF37] text-[10px] md:text-xs font-black uppercase tracking-[0.4em] mb-4 block">Guardian of the Nation</span>
+          <h1 className="text-5xl sm:text-7xl md:text-[10rem] font-black text-[#4A2C2A] tracking-tighter leading-[0.9] md:leading-[0.85] mb-8">
+            BAMBA <br/> <span className="text-[#D4AF37]">IQHAZA.</span>
+          </h1>
+          <p className="text-[#4A2C2A]/60 max-w-2xl mx-auto text-lg md:text-2xl font-light leading-relaxed">
+            There is no bystander in the building of a nation. Pick up your shield and stand with us.
+          </p>
+        </div>
+      </section>
 
-      <section className="py-16 md:py-40">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-32 items-center">
-            <div>
-              <h2 className="text-3xl md:text-7xl font-black text-[#4A2C2A] mb-6 md:mb-10 tracking-tighter">The Power of <br/> <span className="text-[#D4AF37]">The Shield.</span></h2>
-              <p className="text-lg md:text-2xl text-gray-600 font-light leading-relaxed mb-8 md:mb-10 border-l-4 border-[#D4AF37] pl-6 md:pl-8">
-                Your contribution directly funds cultural restoration and direct mentorship.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mb-10 md:mb-12">
-                 <div className="p-6 md:p-8 bg-white rounded-[2rem] shadow-xl border border-[#4A2C2A]/5">
-                    <i className="fa-solid fa-handshake text-[#D4AF37] text-2xl md:text-3xl mb-4"></i>
-                    <h4 className="font-black text-[#4A2C2A] text-base md:text-lg uppercase">Mentorship</h4>
-                 </div>
-                 <div className="p-6 md:p-8 bg-white rounded-[2rem] shadow-xl border border-[#4A2C2A]/5">
-                    <i className="fa-solid fa-shield-heart text-[#D4AF37] text-2xl md:text-3xl mb-4"></i>
-                    <h4 className="font-black text-[#4A2C2A] text-base md:text-lg uppercase">Safety Gear</h4>
-                 </div>
-              </div>
-            </div>
+      {/* Main Pledge Section */}
+      <section className="py-12 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="bg-[#1A0F0E] rounded-[2rem] md:rounded-[5rem] overflow-hidden shadow-2xl relative text-white reveal-up">
+            <div className="zulu-pattern absolute inset-0 opacity-5"></div>
+            
+            <div className="grid lg:grid-cols-2">
+               {/* Left: Context */}
+               <div className="p-8 md:p-24 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center">
+                  <h2 className="text-3xl md:text-6xl font-black mb-6 md:mb-8 tracking-tight">The Power of <br/> <span className="text-[#D4AF37]">The Shield.</span></h2>
+                  <p className="text-white/60 text-base md:text-xl font-light leading-relaxed mb-8 md:mb-12">
+                    Your contribution is not just a donation; it is an investment in the moral fabric of our society. It funds:
+                  </p>
+                  
+                  <div className="space-y-6">
+                     <div className="flex items-start gap-4 md:gap-6 reveal-left delay-100">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-[#D4AF37] rounded-full flex items-center justify-center text-[#1A0F0E] flex-shrink-0">
+                           <i className="fa-solid fa-handshake"></i>
+                        </div>
+                        <div>
+                           <h4 className="text-lg md:text-xl font-black mb-1">Mentorship Programs</h4>
+                           <p className="text-white/50 text-sm">Funding facilitators for our boot camps and workshops.</p>
+                        </div>
+                     </div>
+                     <div className="flex items-start gap-4 md:gap-6 reveal-left delay-200">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-[#D4AF37] rounded-full flex items-center justify-center text-[#1A0F0E] flex-shrink-0">
+                           <i className="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div>
+                           <h4 className="text-lg md:text-xl font-black mb-1">Safety Equipment</h4>
+                           <p className="text-white/50 text-sm">Providing protective gear for Umgangela tournaments.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
 
-            <div className="bg-[#4A2C2A] p-8 md:p-20 rounded-[2.5rem] md:rounded-[4rem] text-white shadow-2xl relative overflow-hidden">
-              <div className="zulu-pattern absolute inset-0 opacity-10"></div>
-              <div className="relative z-10 text-center">
-                <h3 className="text-2xl md:text-3xl font-black mb-8 uppercase tracking-tighter text-[#D4AF37]">Make a Pledge</h3>
-                <div className="grid grid-cols-2 gap-3 md:gap-4 mb-8">
-                  {['R100', 'R250', 'R500', 'R1000'].map(amt => (
-                    <button key={amt} className="py-4 md:py-5 border-2 border-white/10 rounded-xl md:rounded-2xl font-black hover:bg-[#D4AF37] hover:text-[#4A2C2A] text-[10px] uppercase tracking-widest transition-all">
-                      {amt}
-                    </button>
-                  ))}
-                </div>
-                <button className="w-full bg-[#D4AF37] text-[#4A2C2A] py-5 md:py-6 rounded-xl md:rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-white transition-all shadow-xl mb-6">
-                  Donate Securely
-                </button>
-              </div>
+               {/* Right: Donation Form */}
+               <div className="p-6 md:p-24 bg-white/5 relative reveal-right">
+                  <div className="absolute top-0 right-0 p-8 md:p-12 opacity-5 pointer-events-none">
+                     <i className="fa-solid fa-hand-holding-heart text-7xl md:text-9xl"></i>
+                  </div>
+                  
+                  <h3 className="text-[#D4AF37] font-black uppercase tracking-[0.2em] text-sm mb-6 md:mb-8">Make a Pledge</h3>
+                  
+                  <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
+                     {['R100', 'R250', 'R500', 'R1000'].map(amt => (
+                        <button 
+                          key={amt} 
+                          onClick={() => handleAmountSelect(amt)}
+                          className={`py-4 md:py-6 border rounded-xl md:rounded-2xl font-black transition-all text-lg md:text-xl transform active:scale-95 ${selectedAmount === amt ? 'bg-[#D4AF37] text-[#1A0F0E] border-[#D4AF37]' : 'border-white/10 hover:bg-[#D4AF37] hover:text-[#1A0F0E] hover:border-[#D4AF37]'}`}
+                        >
+                           {amt}
+                        </button>
+                     ))}
+                  </div>
+                  
+                  <input 
+                    type="text" 
+                    placeholder="Custom Amount (ZAR)" 
+                    value={customAmount}
+                    onChange={handleCustomAmountChange}
+                    className="w-full bg-black/20 border border-white/10 p-5 md:p-6 rounded-xl md:rounded-2xl text-white outline-none focus:border-[#D4AF37] mb-6 md:mb-8 font-bold text-sm md:text-base transition-colors" 
+                  />
+                  
+                  <button 
+                    onClick={handleDonate}
+                    className="w-full py-5 md:py-6 bg-[#D4AF37] text-[#1A0F0E] rounded-xl md:rounded-2xl font-black uppercase tracking-widest text-xs md:text-sm hover:bg-white transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:scale-[1.02] active:scale-95 whitespace-nowrap"
+                  >
+                     Proceed to Secure Payment
+                  </button>
+                  
+                  <p className="text-center text-white/30 text-[8px] md:text-[10px] uppercase tracking-widest mt-6">
+                     Secured by PayFast • 18A Tax Certificate Available
+                  </p>
+               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-white text-center px-6">
-        <div className="max-w-4xl mx-auto">
-           <span className="text-[#D4AF37] font-black text-[10px] uppercase tracking-[0.4em] mb-4 block">Qhagamshelana</span>
-           <h3 className="text-2xl md:text-5xl font-black text-[#4A2C2A] mb-8 tracking-tighter">Talk to the Elders.</h3>
-           <a href="mailto:info@insizwa.org.za" className="text-lg md:text-5xl font-black text-[#D4AF37] break-all border-b-2 md:border-b-4 border-[#D4AF37] pb-2">info@insizwa.org.za</a>
-        </div>
+      {/* Contact Section */}
+      <section className="py-16 md:py-32 text-center px-4 md:px-6">
+         <div className="max-w-4xl mx-auto reveal-up">
+            <span className="text-[#D4AF37] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] mb-6 block">Qhagamshelana</span>
+            <h3 className="text-3xl md:text-6xl font-black text-[#4A2C2A] mb-8 md:mb-12 tracking-tighter">Talk to the Elders.</h3>
+            
+            <a 
+              href="mailto:info@insizwa.org.za" 
+              className="block text-2xl sm:text-3xl md:text-7xl font-black text-[#D4AF37] hover:text-[#4A2C2A] transition-colors break-all leading-none mb-8 md:mb-12 hover:scale-105 transform duration-300"
+            >
+               info@insizwa.org.za
+            </a>
+
+            <div className="flex flex-col md:flex-row justify-center gap-8 md:gap-16 text-[#4A2C2A]/60">
+               <div className="reveal-left delay-100">
+                  <h4 className="font-bold text-[#4A2C2A] uppercase tracking-widest text-xs mb-2">Office</h4>
+                  <p className="text-sm md:text-base">1240 Zulu Heritage Square<br/>KwaZulu-Natal, SA</p>
+               </div>
+               <div className="reveal-right delay-100">
+                  <h4 className="font-bold text-[#4A2C2A] uppercase tracking-widest text-xs mb-2">Phone</h4>
+                  <p className="text-sm md:text-base">+27 (0) 31 456 7890</p>
+               </div>
+            </div>
+         </div>
       </section>
+
     </div>
   );
 };

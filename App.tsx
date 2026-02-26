@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
@@ -11,31 +10,28 @@ import { Footer } from './components/Footer';
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('home');
 
-  // Intersection Observer for scroll animations
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.1, // Trigger as soon as 10% is visible
+      rootMargin: '0px 0px -50px 0px' // Offset slightly to ensure user sees the start of animation
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('reveal-visible');
-          // Once animated, we can stop observing it
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Watch all elements with reveal classes
-    const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    // Select all animation classes
+    const elements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up, .reveal-scale, .reveal-blur, .reveal-rotate');
     elements.forEach(el => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [currentPage]); // Re-run when page changes
+  }, [currentPage]);
 
-  // Smooth scroll to top on page change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentPage]);

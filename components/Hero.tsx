@@ -1,62 +1,93 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const Hero: React.FC = () => {
-  return (
-    <div className="relative h-[100dvh] flex items-center justify-center overflow-hidden bg-[#4A2C2A]">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1518972559570-7cc1309f3229?q=80&w=2070&auto=format&fit=crop"
-          className="w-full h-full object-cover scale-110 opacity-30 mix-blend-luminosity animate-pulse"
-          style={{ animationDuration: '10s' }}
-          alt="Zulu Heritage Background"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#4A2C2A]/90 via-[#4A2C2A]/70 to-[#4A2C2A]"></div>
-        <div className="zulu-pattern absolute inset-0 opacity-5"></div>
-      </div>
+  const heroImages = [
+    "https://i.ibb.co/yn89TQLD/1771281355462.jpg",
+    "https://i.ibb.co/Z7d8Z53/1771281352095.jpg",
+    "https://i.ibb.co/qYkKz7cW/1771281344302.jpg",
+    "https://i.ibb.co/LdNqH4R6/1771281335321.jpg",
+    "https://i.ibb.co/RGKvM0Qf/1771281126588.jpg"
+  ];
 
-      {/* Hero Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 max-w-6xl mx-auto">
-        <div className="mb-4 md:mb-6 flex justify-center">
-          <span className="flex items-center gap-2 md:gap-4 bg-black/40 backdrop-blur-md px-4 md:px-6 py-1.5 md:py-2 rounded-full border border-white/10">
-            <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#D4AF37] animate-ping"></span>
-            <span className="text-white font-bold text-[8px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em]">Phakela Umthakathi Presents</span>
-          </span>
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative h-[100dvh] w-full overflow-hidden bg-[#1A0F0E] flex flex-col justify-end md:justify-center">
+      {/* Background Slideshow */}
+      {heroImages.map((img, index) => (
+        <div 
+          key={img}
+          className={`absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <img 
+            src={img}
+            className="w-full h-full object-cover opacity-60 scale-105"
+            alt={`Hero Background ${index + 1}`}
+          />
+          {/* Mobile-optimized gradients: Stronger at bottom for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#4A2C2A]/60 via-transparent to-[#1A0F0E] md:to-[#1A0F0E]/80"></div>
+          <div className="absolute inset-0 bg-black/20 mix-blend-multiply"></div>
+        </div>
+      ))}
+
+      {/* Decorative Overlay Pattern */}
+      <div className="zulu-pattern absolute inset-0 opacity-10 pointer-events-none z-10"></div>
+
+      {/* Content - Centered on Mobile */}
+      <div className={`relative z-20 w-full px-6 md:px-12 pb-32 md:pb-0 pt-24 md:pt-20 flex flex-col items-center text-center transition-all duration-1000 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+        
+        {/* Tagline */}
+        <div className="mb-6 md:mb-10 flex items-center justify-center gap-3 md:gap-4">
+           <span className="h-[2px] w-8 md:w-12 bg-[#D4AF37]"></span>
+           <span className="text-[#D4AF37] text-[10px] md:text-xs font-black uppercase tracking-[0.3em]">
+             Est. 2015 • KwaZulu-Natal
+           </span>
+           <span className="h-[2px] w-8 md:w-12 bg-[#D4AF37] block"></span>
         </div>
         
-        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-black text-white mb-4 md:mb-6 leading-[0.9] md:leading-[0.85] tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
-          RESTORE <br/> 
-          <span className="text-[#D4AF37] drop-shadow-[0_10px_30px_rgba(212,175,55,0.4)]">DIGNITY.</span>
+        {/* Main Heading - Scaled for Mobile */}
+        <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-10 tracking-tighter leading-[1.1] md:leading-[0.85] max-w-5xl drop-shadow-2xl">
+          Restoring the <br/> Spirit of <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#8B6F30]">Ubuntu.</span>
         </h1>
         
-        <div className="max-w-2xl mx-auto mb-8 md:mb-12">
-          <p className="text-lg md:text-3xl text-[#D4AF37] font-medium italic mb-4 md:mb-6 opacity-100 leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-            "Vuka Sizwe, Kubuyiswe Ubuntu"
-          </p>
-          <p className="text-xs md:text-lg text-white font-light leading-relaxed tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)] px-4">
-            We are the guardians of Zulu honor. Guiding the next generation of men back to the discipline, 
-            respect, and sacred culture that defines our nation.
-          </p>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 px-4 sm:px-0">
-          <button 
-            onClick={() => window.scrollTo({top: window.innerHeight, behavior: 'smooth'})}
-            className="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 bg-[#D4AF37] text-[#4A2C2A] font-black rounded-full hover:bg-white transition-all transform hover:-translate-y-1 shadow-2xl tracking-widest uppercase text-[10px]"
-          >
-            Enter the Journey
-          </button>
-          <button className="w-full sm:w-auto px-10 md:px-12 py-4 md:py-5 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black rounded-full hover:bg-white hover:text-[#4A2C2A] transition-all tracking-widest uppercase text-[10px]">
-            Our Mission
-          </button>
+        {/* Subheading */}
+        <p className="text-base sm:text-lg md:text-2xl font-light text-gray-200 max-w-xl md:max-w-2xl mb-8 md:mb-14 leading-relaxed mx-auto px-2">
+          "Vuka Sizwe, Kubuyiswe Ubuntu." <br className="hidden md:block"/>
+          Guiding young men back to dignity through discipline, culture, and brotherhood.
+        </p>
+
+        {/* Buttons - Optimized for Mobile (Compact, Auto width) */}
+        <div className="flex flex-row flex-wrap justify-center gap-4 w-full px-4">
+           <button 
+             onClick={() => document.getElementById('pillars')?.scrollIntoView({ behavior: 'smooth' })}
+             className="w-auto px-6 py-4 md:px-8 md:py-5 bg-[#D4AF37] text-[#4A2C2A] rounded-full font-black uppercase tracking-widest text-[10px] md:text-xs hover:bg-white transition-all shadow-[0_10px_30px_rgba(212,175,55,0.3)] flex items-center justify-center gap-2 md:gap-3 active:scale-95 whitespace-nowrap"
+           >
+             <span>Our Mission</span>
+             <i className="fa-solid fa-arrow-down"></i>
+           </button>
+           <button 
+             onClick={() => document.getElementById('join')?.scrollIntoView({ behavior: 'smooth' })}
+             className="w-auto px-6 py-4 md:px-8 md:py-5 bg-white/5 border border-white/20 backdrop-blur-sm text-white rounded-full font-black uppercase tracking-widest text-[10px] md:text-xs hover:bg-white hover:text-[#4A2C2A] transition-all flex items-center justify-center gap-2 md:gap-3 active:scale-95 whitespace-nowrap"
+           >
+             <span>Join Us</span>
+             <i className="fa-solid fa-arrow-right"></i>
+           </button>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:gap-4 opacity-60">
-        <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold">Scroll</span>
-        <div className="w-px h-12 md:h-16 bg-gradient-to-b from-[#D4AF37] to-transparent"></div>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce text-white/30 hidden md:block">
+        <i className="fa-solid fa-chevron-down text-2xl"></i>
       </div>
     </div>
   );

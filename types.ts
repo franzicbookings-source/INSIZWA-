@@ -4,6 +4,7 @@ export interface Program {
   zuluTitle: string;
   description: string;
   icon: string;
+  impactMetric?: string;
 }
 
 export interface Value {
@@ -12,20 +13,13 @@ export interface Value {
   description: string;
 }
 
-export interface WisdomResponse {
-  advice: string;
-  zuluProverb: string;
-  meaning: string;
-}
-
 export interface PastEvent {
   id: string;
   title: string;
-  date: string;
   location: string;
   description: string;
   image: string;
-  images: string[]; // Made mandatory for the archive logic
+  images: string[];
   category: 'Tournament' | 'Dialogue' | 'Workshop';
 }
 
@@ -35,4 +29,10 @@ export interface VideoAsset {
   thumbnail: string;
   videoUrl: string;
   duration: string;
+}
+
+export interface PraisePoem {
+  title: string;
+  zulu: string;
+  english: string;
 }
