@@ -39,6 +39,7 @@ export const Founder: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
   );
 };
